@@ -2,7 +2,7 @@
   "name": "CPictures",
   "short_name": "CPictures",
   "description": "Platforma e menaxhimit te CPictures",
-  "start_url": "/index_mobile.html",
+  "start_url": "/mesazhett/index.html",
   "display": "standalone",
   "background_color": "#0F0F0F",
   "theme_color": "#E8192C",
