@@ -348,7 +348,46 @@ tbody td{padding:12px 16px;font-size:13px;color:var(--t1);}
 .prod-job-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center;}
 .empty-prod{padding:22px 10px;text-align:center;color:var(--t3);font-size:12px;}
 @media(max-width:1100px){.prod-board{grid-template-columns:repeat(2,minmax(0,1fr));}}
-@media(max-width:700px){.prod-board{grid-template-columns:1fr}.workflow-grid{grid-template-columns:1fr}.modal{padding:20px}.fl2{grid-template-columns:1fr}}
+@media(max-width:700px){
+  .prod-board{grid-template-columns:1fr}
+  .workflow-grid{grid-template-columns:1fr}
+  .modal{padding:16px;width:96vw;max-height:92vh}
+  .fl2{grid-template-columns:1fr}
+  .ops-grid{grid-template-columns:1fr 1fr}
+  .ops-grid .stat-card{min-height:92px}
+  #s-orders .table-wrap{overflow:visible;background:transparent;box-shadow:none}
+  #s-orders .table-header{background:#fff;border-radius:12px;margin-bottom:10px;padding:12px}
+  #s-orders .table-actions{display:grid!important;grid-template-columns:1fr;gap:8px!important}
+  #s-orders .search-inp{width:100%!important}
+  #s-orders .filter-row{overflow-x:auto;display:flex;flex-wrap:nowrap;padding:8px 2px 12px;gap:6px;-webkit-overflow-scrolling:touch}
+  #s-orders .filter-row .fc{flex:0 0 auto;white-space:nowrap}
+  #s-orders table{min-width:0;width:100%;display:block}
+  #s-orders thead{display:none}
+  #s-orders tbody{display:flex;flex-direction:column;gap:10px}
+  #s-orders tr{display:grid;grid-template-columns:auto 1fr auto;background:#fff;border:1px solid var(--br);border-radius:12px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  #s-orders td{display:block;border:0!important;padding:4px 6px!important;min-width:0}
+  #s-orders td:nth-child(1){grid-column:1;font-size:11px;color:var(--t3)}
+  #s-orders td:nth-child(2){grid-column:3;grid-row:1}
+  #s-orders td:nth-child(3){grid-column:1/4;grid-row:2;padding-top:8px!important}
+  #s-orders td:nth-child(4){grid-column:1/4;grid-row:3;font-size:11px;color:var(--t2)}
+  #s-orders td:nth-child(4)::before{content:"Dimensioni: ";font-weight:700}
+  #s-orders td:nth-child(5){grid-column:1/4;grid-row:4}
+  #s-orders td:nth-child(6){grid-column:1;grid-row:5;font-weight:700}
+  #s-orders td:nth-child(7){grid-column:2;grid-row:5}
+  #s-orders td:nth-child(8){grid-column:1/3;grid-row:6;font-size:11px;color:var(--t2)}
+  #s-orders td:nth-child(8)::before{content:"Përgjegjës: ";font-weight:700}
+  #s-orders td:nth-child(9){grid-column:1/3;grid-row:7;font-size:11px}
+  #s-orders td:nth-child(9)::before{content:"Afati: ";font-weight:700;color:var(--t2)}
+  #s-orders td:nth-child(10){grid-column:1/3;grid-row:8}
+  #s-orders td:nth-child(11){grid-column:3;grid-row:6/9;align-self:end;justify-self:end}
+  #s-production .table-wrap{overflow:visible}
+  #s-production .table-header{padding:12px}
+  #s-production .prod-board{padding:10px;gap:10px}
+  .bottom-nav{padding-bottom:calc(6px + env(safe-area-inset-bottom))}
+  .bn-item{min-width:0}
+  .bn-item i{font-size:18px}
+  .bn-item{font-size:9.5px}
+}
 /* ================= FUND SISTEMI V2 ================= */
 
 </style>
@@ -358,6 +397,9 @@ tbody td{padding:12px 16px;font-size:13px;color:var(--t1);}
 <meta name="apple-mobile-web-app-title" content="CPictures">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="theme-color" content="#E8192C">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 </head>
 <body>
 
@@ -719,8 +761,8 @@ tbody td{padding:12px 16px;font-size:13px;color:var(--t1);}
 <!-- BOTTOM NAV (mobile) -->
 <div class="bottom-nav" id="bottom-nav">
   <button class="bn-item active" id="bn-home" onclick="goMob('s-home','ni-home','Ballina','bn-home')"><i class="fa-solid fa-house"></i>Ballina</button>
-  <button class="bn-item" id="bn-orders" onclick="goMob('s-orders','ni-orders','Porositë','bn-orders')"><i class="fa-solid fa-clipboard-list"></i>Porosi</button>
-  <button class="bn-item" id="bn-chat" onclick="goMob('s-chat','ni-chat','Mesazhet','bn-chat')"><i class="fa-solid fa-comments"></i>Chat<span class="bn-badge" id="bn-chat-badge" style="display:none;"></span></button>
+  <button class="bn-item" id="bn-orders" onclick="goMob('s-orders','ni-orders','Punët','bn-orders')"><i class="fa-solid fa-clipboard-list"></i>Punët</button>
+  <button class="bn-item" id="bn-production" onclick="goMob('s-production','ni-production','Prodhimi','bn-production')"><i class="fa-solid fa-industry"></i>Prodhimi</button>
   <button class="bn-item" id="bn-clients" onclick="goMob('s-clients','ni-clients','Klientët','bn-clients')"><i class="fa-solid fa-users"></i>Klientë</button>
   <button class="bn-item" id="bn-more" onclick="toggleSidebar()"><i class="fa-solid fa-ellipsis"></i>Më shumë<span class="bn-badge" id="bn-badge" style="display:none;"></span></button>
 </div>
@@ -1089,7 +1131,7 @@ function go(sid,nid,title){
 }
 window.go=go;
 
-var bnMap={'s-home':'bn-home','s-orders':'bn-orders','s-terreni':'bn-terreni','s-clients':'bn-clients','s-chat':'bn-chat'};
+var bnMap={'s-home':'bn-home','s-orders':'bn-orders','s-production':'bn-production','s-clients':'bn-clients'};
 function syncBottomNav(sid){
   document.querySelectorAll('.bn-item').forEach(function(b){b.classList.remove('active');});
   var target=bnMap[sid]||'bn-more';
