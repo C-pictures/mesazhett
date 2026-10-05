@@ -322,6 +322,35 @@ tbody td{padding:12px 16px;font-size:13px;color:var(--t1);}
 .rep-bar-bg{flex:1;height:14px;background:var(--bg);border-radius:5px;overflow:hidden;}
 .rep-bar-fill{height:100%;border-radius:5px;transition:width 0.3s ease;}
 .rep-bar-num{font-size:13px;font-weight:700;font-family:var(--fm);width:90px;text-align:right;flex-shrink:0;}
+
+/* =================== SISTEMI V2 =================== */
+.ops-grid{margin-bottom:16px;}
+.priority-badge{display:inline-flex;align-items:center;justify-content:center;min-width:34px;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.2px;}
+.priority-p1{background:#FFF0F0;color:#E8192C;}
+.priority-p2{background:#FFF8E6;color:#B76E00;}
+.priority-p3{background:#EEF6FF;color:#2563EB;}
+.priority-p4{background:#F3F4F6;color:#6B7280;}
+.machine-tag{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;border-radius:8px;background:var(--bg);border:1px solid var(--br);font-size:11px;font-weight:600;color:var(--t2);white-space:nowrap;}
+.deadline-late{color:var(--red);font-weight:700;}
+.order-sub{font-size:10px;color:var(--t3);margin-top:3px;line-height:1.35;}
+.workflow-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.workflow-grid .sopt{margin:0;min-height:44px;}
+.prod-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:16px;}
+.prod-col{background:var(--bg);border:1px solid var(--br);border-radius:12px;overflow:hidden;min-height:150px;}
+.prod-col-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#fff;border-bottom:1px solid var(--br);font-size:13px;font-weight:700;}
+.prod-count{min-width:24px;height:24px;border-radius:12px;background:var(--redl);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;}
+.prod-list{padding:10px;display:flex;flex-direction:column;gap:8px;}
+.prod-job{background:#fff;border:1px solid var(--br);border-radius:10px;padding:10px;cursor:pointer;transition:.15s;}
+.prod-job:hover{border-color:var(--red);box-shadow:0 3px 12px rgba(0,0,0,.05);}
+.prod-job-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.prod-job-client{font-size:12px;font-weight:700;}
+.prod-job-name{font-size:11px;color:var(--t2);margin-top:2px;}
+.prod-job-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center;}
+.empty-prod{padding:22px 10px;text-align:center;color:var(--t3);font-size:12px;}
+@media(max-width:1100px){.prod-board{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:700px){.prod-board{grid-template-columns:1fr}.workflow-grid{grid-template-columns:1fr}.modal{padding:20px}.fl2{grid-template-columns:1fr}}
+/* ================= FUND SISTEMI V2 ================= */
+
 </style>
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -364,6 +393,7 @@ tbody td{padding:12px 16px;font-size:13px;color:var(--t1);}
       <div class="sb-section">Kryesore</div>
       <button class="nav-item active" id="ni-home" onclick="go('s-home','ni-home','Ballina')"><i class="fa-solid fa-house"></i> Ballina</button>
       <button class="nav-item" id="ni-orders" onclick="go('s-orders','ni-orders','Porositë')"><i class="fa-solid fa-clipboard-list"></i> Porositë</button>
+      <button class="nav-item" id="ni-production" onclick="go('s-production','ni-production','Prodhimi')"><i class="fa-solid fa-industry"></i> Prodhimi</button>
       <button class="nav-item" id="ni-inv" onclick="go('s-inv','ni-inv','Stoku')"><i class="fa-solid fa-box"></i> Stoku</button>
       <button class="nav-item" id="ni-clients" onclick="go('s-clients','ni-clients','Klientët')"><i class="fa-solid fa-users"></i> Klientët</button>
       <div class="sb-section">Menaxhim</div>
@@ -397,6 +427,12 @@ tbody td{padding:12px 16px;font-size:13px;color:var(--t1);}
 
       <!-- HOME -->
       <div id="s-home" class="sc active">
+        <div class="stat-grid ops-grid">
+          <div class="stat-card" style="--accent:var(--red)"><div class="stat-lbl">🔴 P1 Urgjente</div><div class="stat-val" id="st-urgent">0</div><div class="stat-sub">Punë aktive me prioritet P1</div></div>
+          <div class="stat-card" style="--accent:var(--blue)"><div class="stat-lbl">Pret aprovim</div><div class="stat-val" id="st-approval">0</div><div class="stat-sub">Duhet përgjigje nga klienti</div></div>
+          <div class="stat-card" style="--accent:var(--amber)"><div class="stat-lbl">Në prodhim</div><div class="stat-val" id="st-production">0</div><div class="stat-sub">Në makina / përpunim</div></div>
+          <div class="stat-card" style="--accent:var(--red)"><div class="stat-lbl">⚠️ Me vonesë</div><div class="stat-val" id="st-overdue">0</div><div class="stat-sub">Afati ka kaluar</div></div>
+        </div>
         <div class="stat-grid">
           <div class="stat-card adm" id="c-fit" style="display:none;--accent:var(--red)"><div class="stat-lbl">Fitim Sot</div><div class="stat-val" id="st-fit">€ 0</div><div class="stat-sub">Vetëm admin</div></div>
           <div class="stat-card adm" id="c-mua" style="display:none;--accent:var(--pur)"><div class="stat-lbl">Fitim Muaji</div><div class="stat-val" style="color:var(--pur)" id="st-mua">€ 0</div><div class="stat-sub">Vetëm admin</div></div>
@@ -430,22 +466,44 @@ tbody td{padding:12px 16px;font-size:13px;color:var(--t1);}
       <div id="s-orders" class="sc">
         <div class="table-wrap">
           <div class="table-header">
-            <span class="table-title">Të gjitha porositë</span>
-            <div class="table-actions">
-              <input class="search-inp" type="text" placeholder="Kërko porosi..." id="order-search" oninput="renderOrders()">
+            <span class="table-title">Punët / Porositë</span>
+            <div class="table-actions" style="display:flex;gap:8px;flex-wrap:wrap;">
+              <input class="search-inp" type="text" placeholder="Kërko klient, punë, material..." id="order-search" oninput="renderOrders()">
+              <select class="search-inp" id="order-priority" onchange="renderOrders()" style="width:auto;">
+                <option value="all">Të gjitha prioritetet</option><option value="P1">P1 Urgjente</option><option value="P2">P2 E rëndësishme</option><option value="P3">P3 Normale</option><option value="P4">P4 Pa urgjencë</option>
+              </select>
+              <select class="search-inp" id="order-machine" onchange="renderOrders()" style="width:auto;">
+                <option value="all">Të gjitha makinat</option><option>Dizajn</option><option>Mimaki CJV150-160</option><option>Mimaki UJF-6042 UV</option><option>DTF</option><option>CNC</option><option>Laser</option><option>Xerox Versant 80</option><option>Montim / Terren</option><option>Pa caktuar</option>
+              </select>
             </div>
           </div>
           <div class="filter-row">
-            <button class="fc active" onclick="fOrders('all',this)">Të gjitha</button>
-            <button class="fc" onclick="fOrders('Në punë',this)">Në punë</button>
+            <button class="fc active" onclick="fOrders('all',this)">Aktive</button>
+            <button class="fc" onclick="fOrders('Kërkesë e re',this)">Kërkesë</button>
+            <button class="fc" onclick="fOrders('Në dizajn',this)">Në dizajn</button>
+            <button class="fc" onclick="fOrders('Pret aprovim',this)">Pret aprovim</button>
+            <button class="fc" onclick="fOrders('Gati për prodhim',this)">Gati për prodhim</button>
+            <button class="fc" onclick="fOrders('Në prodhim',this)">Në prodhim</button>
             <button class="fc" onclick="fOrders('Gati',this)">Gati</button>
+            <button class="fc" onclick="fOrders('Dorëzuar',this)">Dorëzuar</button>
             <button class="fc" onclick="fOrders('Vonuar',this)">Vonuar</button>
             <button class="fc" onclick="fOrders('Kryer',this)">Kryer</button>
           </div>
           <table>
-            <thead><tr><th>#</th><th>Klienti</th><th>Produkti</th><th>Sasia</th><th>Çmimi</th><th>Pagesa</th><th>Punëtori</th><th>Afati</th><th>Statusi</th><th></th></tr></thead>
+            <thead><tr><th>#</th><th>P</th><th>Klienti / Puna</th><th>Dimensioni</th><th>Makina</th><th>Çmimi</th><th>Pagesa</th><th>Punëtori</th><th>Afati</th><th>Statusi</th><th></th></tr></thead>
             <tbody id="orders-table"></tbody>
           </table>
+        </div>
+      </div>
+
+      <!-- PRODHIMI -->
+      <div id="s-production" class="sc">
+        <div class="table-wrap">
+          <div class="table-header">
+            <span class="table-title">Prodhimi sipas makinës / sektorit</span>
+            <span style="font-size:12px;color:var(--t2);">P1 shfaqet e para · kliko punën për veprime</span>
+          </div>
+          <div class="prod-board" id="production-board"></div>
         </div>
       </div>
 
@@ -679,25 +737,53 @@ tbody td{padding:12px 16px;font-size:13px;color:var(--t1);}
 
 <!-- MODALS -->
 <div class="ov" id="m-order" onclick="bgClose(event,'m-order')">
-  <div class="modal">
-    <div class="modal-title">Porosi e re <button class="modal-close" onclick="closeM('m-order')"><i class="fa-solid fa-times"></i></button></div>
+  <div class="modal" style="width:760px;">
+    <div class="modal-title" id="m-order-title">Porosi e re <button class="modal-close" onclick="closeM('m-order')"><i class="fa-solid fa-times"></i></button></div>
     <input type="hidden" id="o-eid">
+
     <div class="fl2">
       <div class="fl"><label>Klienti</label><input id="o-c" type="text" placeholder="Emri i klientit" list="cl-dl"><datalist id="cl-dl"></datalist></div>
-      <div class="fl"><label>Produkti / Shërbimi</label><input id="o-p" type="text" placeholder="p.sh. Reklamë 3D..."></div>
+      <div class="fl"><label>Produkti / Puna</label><input id="o-p" type="text" placeholder="p.sh. Reklamë 3D, banner, etiketa..."></div>
     </div>
+
+    <div class="fl2">
+      <div class="fl"><label>Dimensionet</label><input id="o-dim" type="text" placeholder="p.sh. 600 × 243 cm"></div>
+      <div class="fl"><label>Materiali</label><input id="o-mat" type="text" placeholder="p.sh. Alucobond 3 mm + Plexi"></div>
+    </div>
+
     <div class="fl2">
       <div class="fl"><label>Sasia</label><input id="o-q" type="text" placeholder="p.sh. 500 copë / 10 m²"></div>
       <div class="fl"><label>Çmimi (€)</label><input id="o-pr" type="number" placeholder="0.00" step="0.01"></div>
     </div>
+
+    <div class="fl2">
+      <div class="fl"><label>Prioriteti</label><select id="o-priority">
+        <option value="P1">P1 — Urgjente / Sot</option><option value="P2" selected>P2 — E rëndësishme / 1–2 ditë</option><option value="P3">P3 — Normale / këtë javë</option><option value="P4">P4 — Pa afat urgjent</option>
+      </select></div>
+      <div class="fl"><label>Makina / Sektori</label><select id="o-machine">
+        <option value="">Pa caktuar</option><option>Dizajn</option><option>Mimaki CJV150-160</option><option>Mimaki UJF-6042 UV</option><option>DTF</option><option>CNC</option><option>Laser</option><option>Xerox Versant 80</option><option>Montim / Terren</option>
+      </select></div>
+    </div>
+
+    <div class="fl2">
+      <div class="fl"><label>Statusi i punës</label><select id="o-status">
+        <option>Kërkesë e re</option><option>Duhen informata</option><option>Në dizajn</option><option>Pret aprovim</option><option>Aprovuar</option><option>Gati për prodhim</option><option>Në prodhim</option><option>Kontroll</option><option>Gati</option><option>Dorëzuar</option><option>Vonuar</option><option>Kryer</option>
+      </select></div>
+      <div class="fl"><label>Afati</label><input id="o-due" type="date"></div>
+    </div>
+
+    <div class="fl2">
+      <div class="fl"><label>Punëtori përgjegjës</label><select id="o-w"></select></div>
+      <div class="fl"><label>Hapi i ardhshëm</label><input id="o-next" type="text" placeholder="p.sh. Pret aprovimin V03 / porosit materialin"></div>
+    </div>
+
     <div class="fl2">
       <div class="fl"><label>Mënyra e pagesës</label><select id="o-pm"><option value="">— Zgjidh —</option><option value="kesh">Kesh 💵</option><option value="bankë">Bankë 🏦</option><option value="pa paguar">Pa paguar</option></select></div>
       <div class="fl"><label>Statusi i pagesës</label><select id="o-pay"><option value="unpaid">Pa paguar</option><option value="paid">Paguar</option><option value="partial">Pjesërisht</option></select></div>
     </div>
-    <div class="fl2">
-      <div class="fl"><label>Punëtori</label><select id="o-w"></select></div>
-      <div class="fl"><label>Afati</label><input id="o-due" type="date"></div>
-    </div>
+
+    <div class="fl"><label>Shënime të prodhimit</label><textarea id="o-note" rows="3" placeholder="Bleed, laminim, white, varnish, contour cut, montim, etj."></textarea></div>
+
     <div class="br3">
       <button class="btn cancel" onclick="closeM('m-order')">Anulo</button>
       <button class="btn primary" id="o-sbtn" onclick="saveOrder()">Ruaj porosinë</button>
@@ -817,13 +903,24 @@ tbody td{padding:12px 16px;font-size:13px;color:var(--t1);}
 
 <!-- STATUS MODAL -->
 <div class="ov" id="m-status" onclick="bgClose(event,'m-status')">
-  <div class="modal" style="width:400px;">
-    <div class="modal-title">Veprime <button class="modal-close" onclick="closeM('m-status')"><i class="fa-solid fa-times"></i></button></div>
-    <button class="sopt" style="color:var(--green);border-color:rgba(0,179,122,0.3);" onclick="setStatus('Gati','green')"><i class="fa-solid fa-check-circle"></i> Gati — Në dorëzim</button>
-    <button class="sopt" style="color:var(--amber);border-color:rgba(245,158,11,0.3);" onclick="setStatus('Në punë','amber')"><i class="fa-solid fa-spinner"></i> Vazhdon — Në punë</button>
-    <button class="sopt" style="color:var(--red);border-color:rgba(232,25,44,0.3);" onclick="setStatus('Vonuar','red')"><i class="fa-solid fa-clock"></i> Ka vonesë</button>
-    <button class="sopt" style="color:var(--pur);border-color:rgba(139,92,246,0.3);background:var(--purl);" onclick="setStatus('Kryer','pur')"><i class="fa-solid fa-circle-check"></i> U realizua — Historik</button>
-    <button class="btn" style="width:100%;margin-top:4px;background:var(--bluel);color:var(--blue);border-color:var(--blue);" onclick="editActiveOrder()"><i class="fa-solid fa-pen"></i> Edito porosinë</button>
+  <div class="modal" style="width:540px;">
+    <div class="modal-title">Rrjedha e punës <button class="modal-close" onclick="closeM('m-status')"><i class="fa-solid fa-times"></i></button></div>
+    <div id="status-current-summary" style="padding:12px 14px;background:var(--bg);border:1px solid var(--br);border-radius:10px;margin-bottom:14px;font-size:12px;"></div>
+    <div class="workflow-grid">
+      <button class="sopt" onclick="setStatus('Kërkesë e re','blue')">📥 Kërkesë e re</button>
+      <button class="sopt" style="color:var(--red)" onclick="setStatus('Duhen informata','red')">❓ Duhen informata</button>
+      <button class="sopt" style="color:var(--amber)" onclick="setStatus('Në dizajn','amber')">🎨 Në dizajn</button>
+      <button class="sopt" style="color:var(--blue)" onclick="setStatus('Pret aprovim','blue')">⏳ Pret aprovim</button>
+      <button class="sopt" style="color:var(--green)" onclick="setStatus('Aprovuar','green')">✓ Aprovuar</button>
+      <button class="sopt" style="color:var(--blue)" onclick="setStatus('Gati për prodhim','blue')">📋 Gati për prodhim</button>
+      <button class="sopt" style="color:var(--amber)" onclick="setStatus('Në prodhim','amber')">🏭 Në prodhim</button>
+      <button class="sopt" style="color:var(--amber)" onclick="setStatus('Kontroll','amber')">🔎 Kontroll final</button>
+      <button class="sopt" style="color:var(--green)" onclick="setStatus('Gati','green')">✅ Gati</button>
+      <button class="sopt" style="color:var(--green)" onclick="setStatus('Dorëzuar','green')">🚚 Dorëzuar</button>
+      <button class="sopt" style="color:var(--red)" onclick="setStatus('Vonuar','red')">⚠️ Vonuar</button>
+      <button class="sopt" style="color:var(--pur);background:var(--purl)" onclick="setStatus('Kryer','pur')">🏁 Mbyll punën</button>
+    </div>
+    <button class="btn" style="width:100%;margin-top:8px;background:var(--bluel);color:var(--blue);border-color:var(--blue);" onclick="editActiveOrder()"><i class="fa-solid fa-pen"></i> Edito detajet</button>
     <button onclick="deleteActiveOrder()" style="width:100%;margin-top:8px;padding:10px;border-radius:var(--r2);border:none;background:#FFF0F0;color:var(--red);font-size:13px;font-weight:600;cursor:pointer;"><i class="fa-solid fa-trash"></i> Fshi porosinë</button>
   </div>
 </div>
@@ -862,7 +959,7 @@ async function initPush(){
 
   try {
     // Regjistro Service Worker
-    const swReg = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+    const swReg = await navigator.serviceWorker.register('./firebase-messaging-sw.js');
     fcmMessaging = firebase.messaging();
     fcmMessaging.useServiceWorker(swReg);
 
@@ -939,7 +1036,12 @@ function closeM(id){G(id).classList.remove('open');}
 function bgClose(e,id){if(e.target.id===id)closeM(id);}
 window.openM=openM;window.closeM=closeM;window.bgClose=bgClose;
 function ini(n){return n.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();}
-function bcls(s){return s==='Gati'?'green':s==='Në punë'?'amber':s==='Vonuar'?'red':s==='Kryer'?'pur':'blue';}
+function normStatus(s){return s==='Në punë'?'Në prodhim':(s||'Kërkesë e re');}
+function bcls(s){s=normStatus(s);if(s==='Gati'||s==='Dorëzuar'||s==='Aprovuar')return'green';if(s==='Në dizajn'||s==='Në prodhim'||s==='Kontroll')return'amber';if(s==='Vonuar'||s==='Duhen informata')return'red';if(s==='Kryer')return'pur';if(s==='Pret aprovim'||s==='Gati për prodhim'||s==='Kërkesë e re')return'blue';return'gray';}
+function priorityClass(p){return p==='P1'?'priority-p1':p==='P2'?'priority-p2':p==='P3'?'priority-p3':'priority-p4';}
+function priorityRank(p){return p==='P1'?1:p==='P2'?2:p==='P3'?3:4;}
+function isOverdue(o){var s=normStatus(o.status);return !o.done&&!!o.date&&o.date<today()&&s!=='Dorëzuar'&&s!=='Kryer';}
+function safe(v){return String(v==null?'':v).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];});}
 function today(){return new Date().toISOString().slice(0,10);}
 function fmtD(d){if(!d)return'';var p=d.slice(0,10).split('-');return p.length===3?p[2]+'.'+p[1]+'.'+p[0]:d;}
 
@@ -952,11 +1054,11 @@ window.closeDP=closeDP;
 
 var addModalMap={
   's-home':'m-order','s-orders':'m-order','s-inv':'m-inv','s-clients':'m-client',
-  's-workers':'m-worker','s-biz':'m-biz','s-terreni':'m-terreni','s-history':'m-order','s-notif':null,'s-report':null,'s-chat':null
+  's-workers':'m-worker','s-biz':'m-biz','s-terreni':'m-terreni','s-history':'m-order','s-production':null,'s-notif':null,'s-report':null,'s-chat':null
 };
 var addLblMap={
   's-home':'Porosi e re','s-orders':'Porosi e re','s-inv':'Shto material','s-clients':'Shto klient',
-  's-workers':'Shto punëtor','s-biz':'Shto biznes','s-terreni':'Matje e re','s-history':'Porosi e re','s-notif':null,'s-report':null,'s-chat':null
+  's-workers':'Shto punëtor','s-biz':'Shto biznes','s-terreni':'Matje e re','s-history':'Porosi e re','s-production':null,'s-notif':null,'s-report':null,'s-chat':null
 };
 function openAddModal(){
   var m=addModalMap[curScreen];
@@ -980,6 +1082,7 @@ function go(sid,nid,title){
   else btn.style.display='none';
   G('detail-panel').classList.remove('open');
   if(sid==='s-report')renderReport();
+  if(sid==='s-production')renderProduction();
   if(sid==='s-chat'){renderChat();}
   syncBottomNav(sid);
   closeSidebar();
@@ -1053,14 +1156,12 @@ function showApp(){
     if(G('hist-sum'))G('hist-sum').style.display='flex';
     if(G('ni-report'))G('ni-report').style.display='';}
   fillWSel();renderHome();updBadge();startChat();
-  // Inicializo push notifications (async, nuk bllokon)
-  setTimeout(initPush, 1500);
   // Inicializo push notifications pas login
   setTimeout(initPush, 1000);
 }
 
 function startL(){
-  db.collection('orders').orderBy('createdAt','desc').onSnapshot(function(snap){orders=[];snap.forEach(function(d){orders.push(Object.assign({id:d.id},d.data()));});renderHome();renderOrders();renderHistory();if(curScreen==='s-report')renderReport();});
+  db.collection('orders').orderBy('createdAt','desc').onSnapshot(function(snap){orders=[];snap.forEach(function(d){orders.push(Object.assign({id:d.id},d.data()));});renderHome();renderOrders();renderProduction();renderHistory();if(curScreen==='s-report')renderReport();});
   db.collection('inventory').onSnapshot(function(snap){inventory=[];snap.forEach(function(d){inventory.push(Object.assign({id:d.id},d.data()));});renderInv();renderHome();});
   db.collection('workers').onSnapshot(function(snap){workers=[];snap.forEach(function(d){workers.push(Object.assign({id:d.id},d.data()));});fillWSel();renderWorkers();renderHome();});
   db.collection('clients').onSnapshot(function(snap){clients=[];snap.forEach(function(d){clients.push(Object.assign({id:d.id},d.data()));});renderClients();renderHome();fillDL();if(curScreen==='s-report')renderReport();});
@@ -1078,6 +1179,14 @@ function renderHome(){
   var active=orders.filter(function(o){return !o.done;});
   var bx=clients.filter(function(c){return !c.paid&&parseFloat(c.debt||0)>0;}).length;
   G('st-por').textContent=active.length;G('st-bor').textContent=bx;
+  var urgent=active.filter(function(o){return (o.priority||'P3')==='P1';}).length;
+  var approval=active.filter(function(o){return normStatus(o.status)==='Pret aprovim';}).length;
+  var production=active.filter(function(o){var s=normStatus(o.status);return s==='Gati për prodhim'||s==='Në prodhim'||s==='Kontroll';}).length;
+  var overdue=active.filter(isOverdue).length;
+  if(G('st-urgent'))G('st-urgent').textContent=urgent;
+  if(G('st-approval'))G('st-approval').textContent=approval;
+  if(G('st-production'))G('st-production').textContent=production;
+  if(G('st-overdue'))G('st-overdue').textContent=overdue;
   if(cu&&cu.role==='Admin'){
     var td=today();
     var fs=orders.filter(function(o){return o.date===td&&o.pay==='paid';}).reduce(function(a,b){return a+parseFloat(b.price||0);},0);
@@ -1086,7 +1195,7 @@ function renderHome(){
     G('st-fit').textContent='€ '+fs.toFixed(2);G('st-mua').textContent='€ '+fm.toFixed(2);
   }
   // Recent orders table
-  var tb=G('home-orders');if(tb){tb.innerHTML='';active.slice(0,6).forEach(function(o,i){var cl=bcls(o.status);var tr=document.createElement('tr');tr.innerHTML='<td class="td-bold">#'+(1000+i)+'</td><td>'+o.client+'</td><td>'+o.prod+'</td><td class="td-mono">€'+parseFloat(o.price||0).toFixed(2)+'</td><td><span class="badge '+cl+'">'+o.status+'</span></td>';tr.onclick=function(){openStatusModal(o.id);};tb.appendChild(tr);});}
+  var tb=G('home-orders');if(tb){tb.innerHTML='';active.slice().sort(function(a,b){return priorityRank(a.priority)-priorityRank(b.priority);}).slice(0,6).forEach(function(o,i){var st=normStatus(o.status),cl=bcls(st);var tr=document.createElement('tr');tr.innerHTML='<td><span class="priority-badge '+priorityClass(o.priority||'P3')+'">'+safe(o.priority||'P3')+'</span></td><td>'+safe(o.client)+'</td><td>'+safe(o.prod)+'</td><td class="td-mono">€'+parseFloat(o.price||0).toFixed(2)+'</td><td><span class="badge '+cl+'">'+safe(st)+'</span></td>';tr.onclick=function(){openStatusModal(o.id);};tb.appendChild(tr);});}
   // Perf chart
   var pc=G('home-perf');if(pc){pc.innerHTML='';var clrs=['#E8192C','#3B82F6','#F59E0B','#00B37A','#8B5CF6'];var dones=workers.map(function(w){return parseInt(w.done)||0;});var maxD=dones.length?Math.max.apply(null,dones.concat([1])):1;workers.forEach(function(w,i){var done=parseInt(w.done)||0;var total=parseInt(w.orders)||0;var pct=Math.round((done/maxD)*100);var pr=document.createElement('div');pr.className='perf-row';pr.innerHTML='<div class="perf-top"><span class="perf-name">'+w.name.split(' ')[0]+'</span><span class="perf-val" style="color:'+clrs[i%clrs.length]+';">'+done+' kryer</span></div><div class="perf-bar"><div class="perf-fill" style="width:'+pct+'%;background:'+clrs[i%clrs.length]+';"></div></div>';pc.appendChild(pr);});}
   // Critical stock
@@ -1096,26 +1205,75 @@ function renderHome(){
 }
 
 function fOrders(f,el){oFlt=f;document.querySelectorAll('#s-orders .fc').forEach(function(c){c.classList.remove('active');});el.classList.add('active');renderOrders();}window.fOrders=fOrders;
+
 function renderOrders(){
   var tb=G('orders-table');if(!tb)return;tb.innerHTML='';
-  var q=(G('order-search')||{}).value||'';q=q.toLowerCase();
+  var q=((G('order-search')||{}).value||'').toLowerCase();
+  var pr=(G('order-priority')||{}).value||'all';
+  var mach=(G('order-machine')||{}).value||'all';
   var list=orders.filter(function(o){
-    var match=!q||o.client.toLowerCase().includes(q)||o.prod.toLowerCase().includes(q);
-    return match&&(oFlt==='all'?!o.done:oFlt==='Kryer'?o.done:o.status===oFlt&&!o.done);
+    var st=normStatus(o.status);
+    var machine=o.machine||'Pa caktuar';
+    var hay=(String(o.client||'')+' '+String(o.prod||'')+' '+String(o.material||'')+' '+String(o.dimensions||'')).toLowerCase();
+    var matchQ=!q||hay.includes(q);
+    var matchF=oFlt==='all'?!o.done:oFlt==='Kryer'?!!o.done:oFlt==='Vonuar'?(isOverdue(o)||st==='Vonuar'):(st===oFlt&&!o.done);
+    var matchP=pr==='all'||(o.priority||'P3')===pr;
+    var matchM=mach==='all'||machine===mach;
+    return matchQ&&matchF&&matchP&&matchM;
   });
-  if(!list.length){tb.innerHTML='<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--t3);">Asnjë porosi</td></tr>';return;}
+  list.sort(function(a,b){var p=priorityRank(a.priority)-priorityRank(b.priority);if(p!==0)return p;return String(a.date||'9999').localeCompare(String(b.date||'9999'));});
+  if(!list.length){tb.innerHTML='<tr><td colspan="11" style="text-align:center;padding:40px;color:var(--t3);">Asnjë punë në këtë filtër</td></tr>';return;}
   list.forEach(function(o,i){
-    var cl=bcls(o.status);
+    var st=normStatus(o.status),cl=bcls(st),late=isOverdue(o);
     var payB=o.pay==='paid'?'<span class="badge green">Paguar</span>':o.pay==='partial'?'<span class="badge amber">Pjesërisht</span>':'<span class="badge red">Pa paguar</span>';
     var tr=document.createElement('tr');
-    tr.innerHTML='<td class="td-bold">#'+(1000+i)+'</td><td><div class="td-bold">'+o.client+'</div></td><td>'+o.prod+'</td><td>'+o.qty+'</td><td class="td-mono">€'+parseFloat(o.price||0).toFixed(2)+'</td><td>'+payB+(o.paymethod?'<div style="font-size:10px;color:var(--t3);margin-top:2px;">'+o.paymethod+'</div>':'')+'</td><td>'+o.worker+'</td><td>'+fmtD(o.date)+'</td><td><span class="badge '+cl+'">'+o.status+'</span></td><td><button onclick="event.stopPropagation();openStatusModal(\''+o.id+'\')" style="padding:5px 12px;border-radius:var(--r3);border:1.5px solid var(--br2);background:var(--bg);font-size:12px;cursor:pointer;">⋮</button></td>';
+    tr.innerHTML='<td class="td-bold">#'+(1000+i)+'</td>'
+      +'<td><span class="priority-badge '+priorityClass(o.priority||'P3')+'">'+safe(o.priority||'P3')+'</span></td>'
+      +'<td><div class="td-bold">'+safe(o.client)+'</div><div class="order-sub">'+safe(o.prod)+(o.material?' · '+safe(o.material):'')+(o.nextStep?'<br>→ '+safe(o.nextStep):'')+'</div></td>'
+      +'<td>'+safe(o.dimensions||'—')+'</td>'
+      +'<td><span class="machine-tag"><i class="fa-solid fa-gear"></i>'+safe(o.machine||'Pa caktuar')+'</span></td>'
+      +'<td class="td-mono">€'+parseFloat(o.price||0).toFixed(2)+'</td>'
+      +'<td>'+payB+(o.paymethod?'<div class="order-sub">'+safe(o.paymethod)+'</div>':'')+'</td>'
+      +'<td>'+safe(o.worker||'—')+'</td>'
+      +'<td class="'+(late?'deadline-late':'')+'">'+(late?'⚠️ ':'')+fmtD(o.date)+'</td>'
+      +'<td><span class="badge '+cl+'">'+safe(st)+'</span></td>'
+      +'<td><button onclick="event.stopPropagation();openStatusModal(\''+o.id+'\')" style="padding:5px 12px;border-radius:var(--r3);border:1.5px solid var(--br2);background:var(--bg);font-size:12px;cursor:pointer;">⋮</button></td>';
     tr.onclick=function(){openStatusModal(o.id);};
     tb.appendChild(tr);
   });
 }
 
-function openStatusModal(id){aOrdId=id;openM('m-status');}
+function openStatusModal(id){
+  aOrdId=id;
+  var o=orders.find(function(x){return x.id===id;});
+  if(o&&G('status-current-summary')){
+    var late=isOverdue(o);
+    G('status-current-summary').innerHTML='<div style="display:flex;justify-content:space-between;gap:10px;"><strong>'+safe(o.client)+' — '+safe(o.prod)+'</strong><span class="priority-badge '+priorityClass(o.priority||'P3')+'">'+safe(o.priority||'P3')+'</span></div>'
+      +'<div style="margin-top:6px;color:var(--t2);">'+safe(o.machine||'Pa caktuar')+' · Afati: <span class="'+(late?'deadline-late':'')+'">'+fmtD(o.date)+'</span></div>'
+      +(o.nextStep?'<div style="margin-top:6px;">Hapi tjetër: <strong>'+safe(o.nextStep)+'</strong></div>':'');
+  }
+  openM('m-status');
+}
 window.openStatusModal=openStatusModal;
+
+function renderProduction(){
+  var board=G('production-board');if(!board)return;board.innerHTML='';
+  var machines=['Dizajn','Mimaki CJV150-160','Mimaki UJF-6042 UV','DTF','CNC','Laser','Xerox Versant 80','Montim / Terren','Pa caktuar'];
+  var active=orders.filter(function(o){return !o.done;});
+  machines.forEach(function(machine){
+    var list=active.filter(function(o){return (o.machine||'Pa caktuar')===machine;});
+    list.sort(function(a,b){var p=priorityRank(a.priority)-priorityRank(b.priority);if(p!==0)return p;return String(a.date||'9999').localeCompare(String(b.date||'9999'));});
+    var col=document.createElement('div');col.className='prod-col';
+    var rows=list.map(function(o){
+      var st=normStatus(o.status),late=isOverdue(o);
+      return '<div class="prod-job" onclick="openStatusModal(\''+o.id+'\')"><div class="prod-job-top"><div><div class="prod-job-client">'+safe(o.client)+'</div><div class="prod-job-name">'+safe(o.prod)+'</div></div><span class="priority-badge '+priorityClass(o.priority||'P3')+'">'+safe(o.priority||'P3')+'</span></div>'
+        +'<div class="prod-job-meta"><span class="badge '+bcls(st)+'">'+safe(st)+'</span>'+(o.dimensions?'<span class="machine-tag">'+safe(o.dimensions)+'</span>':'')+'<span class="'+(late?'deadline-late':'order-sub')+'">'+(late?'⚠️ ':'')+fmtD(o.date)+'</span></div>'
+        +(o.nextStep?'<div class="order-sub" style="margin-top:7px;">→ '+safe(o.nextStep)+'</div>':'')+'</div>';
+    }).join('');
+    col.innerHTML='<div class="prod-col-head"><span>'+safe(machine)+'</span><span class="prod-count">'+list.length+'</span></div><div class="prod-list">'+(rows||'<div class="empty-prod">Asnjë punë aktive</div>')+'</div>';
+    board.appendChild(col);
+  });
+}
 
 function fInv(f,el){iFlt=f;document.querySelectorAll('#s-inv .fc').forEach(function(c){c.classList.remove('active');});el.classList.add('active');renderInv();}window.fInv=fInv;
 function renderInv(){
@@ -1550,31 +1708,79 @@ function fillWSel(){
   });
 }
 
-function openNewOrder(){G('m-order-title') && (G('m-order-title').textContent='Porosi e re');G('o-eid').value='';G('o-c').value='';G('o-p').value='';G('o-q').value='';G('o-pr').value='';G('o-pay').value='unpaid';G('o-pm').value='';G('o-due').value=today();G('o-sbtn').textContent='Ruaj';openM('m-order');}
+function openNewOrder(){
+  if(G('m-order-title'))G('m-order-title').childNodes[0].nodeValue='Porosi e re ';
+  G('o-eid').value='';G('o-c').value='';G('o-p').value='';G('o-dim').value='';G('o-mat').value='';G('o-q').value='';G('o-pr').value='';
+  G('o-priority').value='P2';G('o-machine').value='';G('o-status').value='Kërkesë e re';G('o-pay').value='unpaid';G('o-pm').value='';G('o-due').value=today();G('o-next').value='';G('o-note').value='';
+  G('o-sbtn').textContent='Ruaj porosinë';openM('m-order');
+}
 window.openNewOrder=openNewOrder;
 
 async function saveOrder(){
-  var c=G('o-c').value.trim();if(!c){toast('Shkruaj klientin!');return;}
-  var prod=G('o-p').value.trim();if(!prod){toast('Shkruaj produktin!');return;}
-  var price=parseFloat(G('o-pr').value)||0;var pay=G('o-pay').value;var pm=G('o-pm').value;
-  var worker=G('o-w').value||cu.name;var due=G('o-due').value||today();var eid=G('o-eid').value;
-  var data={client:c,prod:prod,qty:G('o-q').value||'1',price:price,worker:worker,status:'Në punë',pay:pay,paymethod:pm,date:due,done:false};
+  var client=G('o-c').value.trim();if(!client){toast('Shkruaj klientin!');return;}
+  var prod=G('o-p').value.trim();if(!prod){toast('Shkruaj produktin / punën!');return;}
+  var price=parseFloat(G('o-pr').value)||0,pay=G('o-pay').value,pm=G('o-pm').value;
+  var worker=G('o-w').value||(cu?cu.name:''),due=G('o-due').value||today(),eid=G('o-eid').value;
+  var status=G('o-status').value||'Kërkesë e re';
+  var data={
+    client:client,prod:prod,dimensions:G('o-dim').value.trim(),material:G('o-mat').value.trim(),qty:G('o-q').value||'1',price:price,
+    priority:G('o-priority').value||'P3',machine:G('o-machine').value||'',worker:worker,status:status,pay:pay,paymethod:pm,date:due,
+    nextStep:G('o-next').value.trim(),notes:G('o-note').value.trim(),done:status==='Kryer',
+    updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+  };
   try{
-    if(eid){await db.collection('orders').doc(eid).update(data);await addN('Porosia u editua',prod+' — '+c,worker,'#3B82F6','Edituar','blue');toast('U përditësua!');}
-    else{data.createdAt=firebase.firestore.FieldValue.serverTimestamp();await db.collection('orders').add(data);if(pay==='unpaid'||pay==='partial'){var cl=clients.find(function(x){return x.name===c;});if(!cl){await db.collection('clients').add({name:c,phone:'',debt:price,paid:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()});}else{await db.collection('clients').doc(cl.id).update({debt:parseFloat(cl.debt||0)+price,paid:false});}}var wObj=workers.find(function(w){return w.name===worker;});if(wObj)await db.collection('workers').doc(wObj.id).update({orders:(parseInt(wObj.orders)||0)+1});await addN('Porosi e re',prod+' — '+c,worker,'#E8192C','E re','red');toast('Porosia u shtua!');}
-    closeM('m-order');G('o-c').value='';G('o-p').value='';G('o-q').value='';G('o-pr').value='';G('o-eid').value='';G('o-sbtn').textContent='Ruaj';
+    if(eid){
+      await db.collection('orders').doc(eid).update(data);
+      await addN('Porosia u editua',prod+' — '+client,worker,'#3B82F6','Edituar','blue');
+      toast('U përditësua!');
+    }else{
+      data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
+      await db.collection('orders').add(data);
+      if(pay==='unpaid'||pay==='partial'){
+        var cl=clients.find(function(x){return x.name===client;});
+        if(!cl)await db.collection('clients').add({name:client,phone:'',debt:price,paid:false,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+        else await db.collection('clients').doc(cl.id).update({debt:parseFloat(cl.debt||0)+price,paid:false});
+      }
+      var wObj=workers.find(function(w){return w.name===worker;});
+      if(wObj)await db.collection('workers').doc(wObj.id).update({orders:(parseInt(wObj.orders)||0)+1});
+      await addN('Porosi e re',prod+' — '+client,worker,'#E8192C',data.priority,data.priority==='P1'?'red':'blue');
+      toast('Porosia u shtua!');
+    }
+    closeM('m-order');G('o-eid').value='';G('o-sbtn').textContent='Ruaj porosinë';
   }catch(e){toast('Gabim: '+e.message);}
-}window.saveOrder=saveOrder;
+}
+window.saveOrder=saveOrder;
 
-function editActiveOrder(){var o=orders.find(function(x){return x.id===aOrdId;});if(!o)return;closeM('m-status');G('o-eid').value=o.id;G('o-c').value=o.client||'';G('o-p').value=o.prod||'';G('o-q').value=o.qty||'';G('o-pr').value=o.price||0;G('o-pay').value=o.pay||'unpaid';G('o-pm').value=o.paymethod||'';G('o-due').value=o.date||'';G('o-sbtn').textContent='Përditëso';openM('m-order');}window.editActiveOrder=editActiveOrder;
+function editActiveOrder(){
+  var o=orders.find(function(x){return x.id===aOrdId;});if(!o)return;closeM('m-status');
+  if(G('m-order-title'))G('m-order-title').childNodes[0].nodeValue='Edito porosinë ';
+  G('o-eid').value=o.id;G('o-c').value=o.client||'';G('o-p').value=o.prod||'';G('o-dim').value=o.dimensions||'';G('o-mat').value=o.material||'';
+  G('o-q').value=o.qty||'';G('o-pr').value=o.price||0;G('o-priority').value=o.priority||'P3';G('o-machine').value=o.machine||'';
+  var st=normStatus(o.status);if(Array.from(G('o-status').options).some(function(x){return x.value===st;}))G('o-status').value=st;
+  G('o-pay').value=o.pay||'unpaid';G('o-pm').value=o.paymethod||'';G('o-due').value=o.date||'';G('o-next').value=o.nextStep||'';G('o-note').value=o.notes||'';
+  if(o.worker)G('o-w').value=o.worker;G('o-sbtn').textContent='Përditëso';openM('m-order');
+}
+window.editActiveOrder=editActiveOrder;
 
 async function setStatus(status,cls){
   if(!aOrdId){closeM('m-status');return;}
   var o=orders.find(function(x){return x.id===aOrdId;});if(!o){closeM('m-status');return;}
-  var isDone=status==='Kryer';
-  try{await db.collection('orders').doc(aOrdId).update({status:status,done:isDone});if(isDone){var wObj=workers.find(function(w){return w.name===o.worker;});if(wObj)await db.collection('workers').doc(wObj.id).update({done:(parseInt(wObj.done)||0)+1});}var col=status==='Gati'?'#00B37A':status==='Vonuar'?'#E8192C':status==='Kryer'?'#8B5CF6':'#F59E0B';await addN(status==='Gati'?'Porosia u krye':status==='Kryer'?'U realizua':status==='Vonuar'?'Porosi e vonuar':'Vazhdon',o.prod+' — '+o.client,cu.name,col,status,cls);toast(isDone?'Kaloi në historik!':'Statusi u ndryshua!');}catch(e){toast('Gabim: '+e.message);}
+  if(status==='Kryer'&&o.pay!=='paid'){toast('Puna nuk mbyllet: pagesa ende nuk është Paguar.');return;}
+  var wasDone=!!o.done,isDone=status==='Kryer';
+  var upd={status:status,done:isDone,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+  try{
+    await db.collection('orders').doc(aOrdId).update(upd);
+    if(isDone&&!wasDone){
+      var wObj=workers.find(function(w){return w.name===o.worker;});
+      if(wObj)await db.collection('workers').doc(wObj.id).update({done:(parseInt(wObj.done)||0)+1});
+    }
+    var col=cls==='green'?'#00B37A':cls==='red'?'#E8192C':cls==='pur'?'#8B5CF6':cls==='amber'?'#F59E0B':'#3B82F6';
+    await addN(status,o.prod+' — '+o.client,cu?cu.name:'Sistem',col,status,cls||bcls(status));
+    toast(isDone?'Puna u mbyll dhe kaloi në historik!':'Statusi u ndryshua: '+status);
+  }catch(e){toast('Gabim: '+e.message);}
   closeM('m-status');
-}window.setStatus=setStatus;
+}
+window.setStatus=setStatus;
 
 async function deleteActiveOrder(){if(!aOrdId)return;var o=orders.find(function(x){return x.id===aOrdId;});if(!o)return;if(!confirm('Fshi porosinë e '+o.client+'?'))return;try{await db.collection('orders').doc(aOrdId).delete();closeM('m-status');toast('Porosia u fshi!');}catch(e){toast('Gabim: '+e.message);}}window.deleteActiveOrder=deleteActiveOrder;
 
