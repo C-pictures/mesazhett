@@ -1,8 +1,8 @@
 {
-  "name": "CPictures",
+  "name": "CPictures System V2",
   "short_name": "CPictures",
   "description": "Platforma e menaxhimit te CPictures",
-  "start_url": "/mesazhett/index.html",
+  "start_url": "/mesazhett/?v=2",
   "display": "standalone",
   "background_color": "#0F0F0F",
   "theme_color": "#E8192C",
@@ -20,5 +20,6 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "scope": "/mesazhett/"
 }
